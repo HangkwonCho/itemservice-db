@@ -87,6 +87,8 @@ class ItemRepositoryTest {
 
     void test(String itemName, Integer maxPrice, Item... items) {
         List<Item> result = itemRepository.findAll(new ItemSearchCond(itemName, maxPrice));
+
+        // containsExactly - 데이터 순서도 체크
         assertThat(result).containsExactly(items);
     }
 }
