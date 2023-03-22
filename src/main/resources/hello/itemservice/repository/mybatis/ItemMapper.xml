@@ -3,6 +3,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="hello.itemservice.repository.mybatis.ItemMapper">
 
+    <sql id="userColumns"> ${alias}.id,${alias}.username,${alias}.password </sql>
+
+    <select id="selectUsers" resultType="map">
+        select
+            <include refid="userColumns"><property name="alias" value="t1"/></include>,
+            <include refid="userColumns"><property name="alias" value="t2"/></include>
+          from some_table t1
+         cross join some_table t2
+    </select>
+
     <insert id="save" keyProperty="id" useGeneratedKeys="true">
         insert into item (item_name, price, quantity)
         values (#{itemName}, #{price}, #{quantity})
@@ -16,11 +26,11 @@
          where id = #{id}
     </update>
 
-    <select id="findById" resultType="Item">
+<!--    <select id="findById" resultType="Item">
         select id, item_name, price, quantity
           from item
          where id = #{id}
-    </select>
+    </select>-->
 
     <select id="findAll" resultType="Item">
         select id,
